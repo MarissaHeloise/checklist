@@ -67,6 +67,23 @@ pnpm start
 pnpm run build
 ```
 
+### 打包为 Windows EXE（安装版 + 免安装便携版）
+
+打包前建议先关闭正在运行的开发模式（`pnpm start`）以及已启动的应用窗口，避免文件占用导致打包异常。
+
+在项目根目录执行：
+
+```powershell
+Set-Location "D:\stickynotes\StickyNotes"
+pnpm install
+pnpm run build
+```
+
+打包产物输出在 `dist_electron_out/`：
+
+- **安装版（NSIS）**：`dist_electron_out/stickynotes Setup <version>.exe`
+- **免安装便携版（portable）**：`dist_electron_out/stickynotes <version>.exe`（可直接双击运行）
+
 ## Licence
 
 MIT License (MIT)

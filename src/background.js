@@ -34,6 +34,8 @@ function trayLogoPng() {
   // 优先使用项目内的 logo.png 作为托盘图标（开发环境可直接读取 src/assets）
   // 打包后路径可能变化，因此这里做多路径尝试；失败则返回 null 走兜底。
   const candidates = [
+    // 生产环境：electron-builder extraResources 会把文件拷贝到 resources 目录
+    path.join(process.resourcesPath || "", "tray-logo.png"),
     path.join(process.cwd(), "src", "assets", "logo.png"),
     // vue-cli-plugin-electron-builder 在生产环境通常会把静态资源放到 __static
     typeof __static === "string" ? path.join(__static, "img", "logo.png") : null,
@@ -155,17 +157,14 @@ function createWindow() {
   });
 
   win.on("close", e => {
-    if (isQuitting) return;
-    e.preventDefault();
-    isQuitting = true;
-    try {
-      win.webContents.send("closeall");
-    } catch {}
-    setTimeout(() => {
+    // 关闭按钮 = 真正退出（不驻留托盘），便于卸载/更新
+    // 只对“最小化”进行托盘隐藏
+    if (!isQuitting) {
+      isQuitting = true;
       try {
-        app.quit();
+        win.webContents.send("closeall");
       } catch {}
-    }, 300);
+    }
   });
 }
 
@@ -219,7 +218,10 @@ ipcMain.handle("minimize", event => {
 ipcMain.handle("close", event => {
   try {
     const w = BrowserWindow.fromWebContents(event.sender);
-    if (w) w.close();
+    if (w) {
+      isQuitting = true;
+      w.close();
+    }
   } catch {}
 });
 

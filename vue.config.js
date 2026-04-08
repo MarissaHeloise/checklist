@@ -37,6 +37,21 @@ module.exports = {
         });
       },
       builderOptions: {
+        // 使用项目内图标作为 Windows 应用/安装包图标
+        icon: "src/assets/logo.png",
+        win: {
+          target: [
+            "nsis",
+            "portable"
+          ]
+        },
+        // 把托盘图标资源打进最终产物（生产环境从 process.resourcesPath 读取）
+        extraResources: [
+          {
+            from: "src/assets/logo.png",
+            to: "tray-logo.png"
+          }
+        ],
         nsis: {
           differentialPackage: false
         },
