@@ -1,0 +1,242 @@
+/* MIT License
+
+Copyright (c) 2020 Playork
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE. */
+
+/* Title Bar Css */
+#titlebar1 {
+  background: #333333;
+  transition: height 0.3s ease-in-out;
+  display: block;
+  height: 32px;
+  width: 100%;
+  min-width: 300px;
+  padding: 4px !important;
+  color: #fff;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 100%;
+  z-index: 9;
+  box-shadow: rgba(0, 0, 0, 50%) 0 0.01px 5px;
+}
+#close-button {
+  width: 40px !important;
+}
+#close-button:hover {
+  box-shadow: none !important;
+  background: #e81123;
+  color: #fff;
+}
+#minimize-button:hover {
+  box-shadow: none !important;
+  background: rgba(255, 255, 255, 0.4);
+  color: #fff;
+}
+.button {
+  grid-row: 1 / span 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100% !important;
+  height: 100% !important;
+  font-family: "segoe" !important;
+  background: none;
+  user-select: none;
+}
+.button:hover {
+  background: rgba(255, 255, 255, 0.4);
+  opacity: 1;
+  color: #fff;
+}
+
+#titlebar {
+  display: block;
+  height: 32px;
+  width: 100%;
+  min-width: 300px;
+  background-color: #ffeb81;
+  padding: 4px !important;
+  color: #707070;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 100%;
+  transition: height 0.1s ease;
+  z-index: 8;
+  box-shadow: rgba(0, 0, 0, 50%) 0 0.01px 5px;
+}
+#drag-region {
+  width: 100% !important;
+  height: 100%;
+  -webkit-app-region: drag;
+  display: grid;
+  grid-template-columns: auto 138px;
+}
+#window-controls {
+  display: grid;
+  grid-template-columns: repeat(4, 40px) !important;
+  position: absolute;
+  top: 0 !important;
+  left: calc(100% - 95px);
+  height: 100%;
+  font-size: 25px;
+  -webkit-app-region: no-drag;
+  align-items: center;
+}
+#window-controls1 {
+  display: grid;
+  grid-template-columns: repeat(2, 40px) !important;
+  position: absolute;
+  top: 0 !important;
+  left: calc(100% - 130px);
+  height: 100%;
+  font-size: 25px;
+  -webkit-app-region: no-drag;
+  align-items: center;
+}
+#window-title1,
+#window-title2 {
+  grid-row: 1 / span 1;
+  font-size: 25px;
+  font-family: "segoe";
+  width: 40px;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  position: absolute;
+  top: 0 !important;
+  left: 10px !important;
+  height: 100%;
+  -webkit-app-region: no-drag;
+}
+#window-title1 span {
+  -webkit-app-region: no-drag;
+  color: #707070;
+}
+#window-title1 span:hover {
+  color: #fff;
+}
+#window-title2 span {
+  -webkit-app-region: no-drag;
+  color: #707070;
+}
+#window-title2 span:hover {
+  color: #fff;
+}
+#window-title1:hover {
+  background: rgba(255, 255, 255, 0.4);
+  opacity: 1;
+}
+#locks {
+  grid-row: 1 / span 1;
+  font-size: 25px;
+  font-family: "segoe";
+  width: 40px;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  position: absolute;
+  top: 0 !important;
+  left: 45px !important;
+  height: 100%;
+  -webkit-app-region: no-drag;
+  color: #707070;
+}
+#locks:hover {
+  background: rgba(255, 255, 255, 0.4);
+  opacity: 1;
+  color: #fff;
+}
+#lock {
+  -webkit-app-region: no-drag;
+}
+#menus {
+  grid-row: 1 / span 1;
+  font-size: 25px;
+  font-family: "segoe";
+  width: 40px !important;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  position: absolute;
+  top: 0 !important;
+  right: 125px !important;
+  height: 100%;
+  -webkit-app-region: no-drag;
+  color: #707070;
+}
+#menus:hover {
+  background: rgba(255, 255, 255, 0.4);
+  opacity: 1;
+  color: #fff;
+}
+#menus {
+  -webkit-app-region: no-drag;
+}
+.dropdown-content {
+  display: none;
+  position: absolute;
+  top: 40px;
+  background-color: #202020ee;
+  min-width: 175px;
+  box-shadow: rgba(0, 0, 0, 50%) 0 0.01px 5px;
+  z-index: 1;
+}
+.dropdown-content a {
+  color: white;
+  padding: 5px;
+  text-decoration: none;
+  display: block;
+  font-size: 20px;
+  font-family: "Lobster";
+}
+.dropdown-content a span {
+  font-family: "segoe";
+  padding: 5px;
+}
+.dropdown-content a:hover {
+  background-color: #111;
+}
+.show {
+  display: block;
+}
+#profiles {
+  position: fixed;
+  top: 5px;
+  right: 100px;
+  -webkit-app-region: no-drag;
+}
+#profile {
+  font-family: "Lobster";
+  font-size: 15px;
+  color: #fff;
+  width: 100px;
+  height: 30px;
+  background: #111;
+  outline: none;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: -40px;
+  box-shadow: rgba(0, 0, 0, 50%) 0 0.01px 5px;
+}

@@ -1,0 +1,307 @@
+/* MIT License
+
+Copyright (c) 2020 Playork
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE. */
+
+/* Editor Css */
+#lightYellow {
+  padding-top: 30px;
+  padding-bottom: 60px;
+  display: block;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background-color: #fff2ab;
+  height: calc(100% - 60px);
+  overflow: auto;
+  width: 100%;
+}
+#editor {
+  padding-top: 10px;
+}
+@media screen and (max-height: 374px) {
+  #editor {
+    overflow: hidden;
+  }
+}
+.ql-snow {
+  border: none !important;
+}
+.ql-snow .ql-editor {
+  width: 98%;
+  overflow-x: hidden;
+  margin-left: 2px;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  color: #000;
+  font-size: 18px;
+  font-family: "Nunito";
+}
+*::-webkit-scrollbar {
+  width: 6px;
+  cursor: pointer;
+}
+*::-webkit-scrollbar-track {
+  box-shadow: none;
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  background: none;
+  cursor: pointer;
+}
+*::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  background: #000;
+  box-shadow: none;
+  cursor: pointer;
+}
+.ql-snow .ql-picker.ql-font .ql-picker-label[data-value=""]::before {
+  content: "Nunito";
+}
+.ql-snow .ql-picker.ql-font .ql-picker-item[data-value=""]::before {
+  content: "Nunito";
+}
+.ql-snow .ql-picker.ql-font .ql-picker-label[data-value="lobster"]::before {
+  content: "Lobster";
+  font-family: "Lobster";
+}
+.ql-snow .ql-picker.ql-font .ql-picker-item[data-value="lobster"]::before {
+  content: "Lobster";
+  font-family: "Lobster";
+}
+.ql-snow .ql-picker.ql-font .ql-picker-label[data-value="comicsans"]::before {
+  content: "ComicSans";
+  font-family: "ComicSans";
+}
+.ql-snow .ql-picker.ql-font .ql-picker-item[data-value="comicsans"]::before {
+  content: "ComicSans";
+  font-family: "ComicSans";
+}
+.ql-snow .ql-picker.ql-size .ql-picker-item[data-value="10px"]::before {
+  content: "Small";
+  font-size: 10px !important;
+}
+.ql-snow .ql-picker.ql-size .ql-picker-item[data-value="18px"]::before {
+  content: "Normal";
+  font-size: 18px !important;
+}
+.ql-snow .ql-picker.ql-size .ql-picker-item[data-value="27px"]::before {
+  content: "Large";
+  font-size: 27px !important;
+}
+.ql-snow .ql-picker.ql-size .ql-picker-item[data-value="37px"]::before {
+  content: "Huge";
+  font-size: 37px !important;
+}
+.body:hover .ql-snow .ql-editor::-webkit-scrollbar {
+  width: 6px;
+}
+.ql-snow.ql-toolbar {
+  display: none;
+}
+#toolbar-container .ql-font span[data-label="Nunito"]::before {
+  font-family: "Nunito";
+}
+#toolbar-container .ql-font span[data-label="Lobster"]::before {
+  font-family: "Lobster";
+}
+#toolbar-container .ql-font span[data-label="ComicSans"]::before {
+  font-family: "ComicSans";
+}
+.ql-font-lobster {
+  font-family: "Lobster";
+}
+.ql-font-comicsans {
+  font-family: "ComicSans";
+}
+.ql-toolbar {
+  position: fixed !important;
+  top: 0 !important;
+  z-index: 6;
+  padding-top: 40px !important;
+}
+#draw {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 40px;
+  bottom: 40px;
+  z-index: 5;
+}
+#black {
+  background: black;
+}
+#red {
+  background: red;
+}
+#white {
+  background: white;
+  color: black;
+}
+#green1 {
+  background: green;
+}
+#blue1 {
+  background: blue;
+}
+#clear {
+  width: 40px;
+  color: #fff;
+  border-radius: 50%;
+  font-family: "segoe";
+  font-size: 20px;
+  background: #202020;
+  border: none;
+  height: 40px;
+  position: absolute;
+  top: 70px;
+  right: 10px;
+}
+#backc {
+  position: absolute;
+  background-color: #fff2ab;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  z-index: 4;
+}
+.ql-snow .ql-editor {
+  position: absolute;
+  top: 0;
+  bottom: 60px;
+  left: 0;
+  right: 0;
+  z-index: 5;
+}
+#brushcolor {
+  display: grid;
+  grid-template-columns: 17% 16% 17% 17% 16% 17%;
+  position: fixed;
+  top: 40px;
+  left: 0;
+  right: 0;
+  z-index: 6;
+  width: 100%;
+  height: 40px;
+  min-width: 300px;
+  padding: 0;
+  margin: 0;
+  transition: height 0.1s ease;
+  box-shadow: rgba(0, 0, 0, 50%) 0 0.01px 5px;
+}
+#choosepaint {
+  background: #202020ee;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  font-family: "Lobster";
+  z-index: 7;
+  padding-top: 45px;
+  text-align: center;
+  display: none;
+  color: white;
+}
+#paintcolor {
+  background: transparent;
+}
+
+.brushwidth {
+  -webkit-appearance: none;
+  height: 5px;
+  border-radius: 5px;
+  background: #000;
+  outline: none;
+}
+.brushwidth::-webkit-slider-thumb {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #fff;
+  cursor: pointer;
+}
+#restore,
+#backup,
+#save {
+  display: none;
+}
+#undo {
+  font-family: "segoe";
+  font-size: 20px;
+  position: absolute;
+  bottom: 40px;
+  right: 30px;
+  z-index: 6;
+  color: #fff;
+  padding: 5px;
+  background: #202020ee;
+}
+#redo {
+  font-family: "segoe";
+  font-size: 20px;
+  position: absolute;
+  bottom: 40px;
+  right: 0;
+  z-index: 6;
+  color: #fff;
+  padding: 5px;
+  background: #202020ee;
+}
+#deletenote1 {
+  font-family: "segoe";
+  font-size: 20px;
+  position: absolute;
+  bottom: 40px;
+  right: 60px;
+  z-index: 6;
+  color: #fff;
+  padding: 5px;
+  background: #202020ee;
+}
+.link-quill {
+  color: blue;
+  cursor: pointer;
+}
+.link-quill:hover {
+  color: darkblue;
+}
+.link-quill:active {
+  color: violet;
+}
+#candit {
+  display: none;
+  position: absolute;
+  top: 40px;
+  left: 0;
+  right: 0;
+  height: 40px;
+  z-index: 7;
+  padding: 5px;
+  background: rgba(0, 0, 0, 0);
+}
+.upper-canvas {
+  z-index: 5;
+}
