@@ -1,81 +1,73 @@
-# Description
+# Sticky TodoList (Electron + Vue2)
 
-![Logo](src/assets/logo.png)
-![ScreenShot](screen.png)
+一个极简的本地 TodoList 便签应用（单窗口）：只做待办清单，数据保存在本地，不做云同步。
 
-### A Open Source Sticky Note Application.
+## 功能
 
-### Automatically Save Notes
+- 勾选待办（checkbox）
+- 拖拽排序（拖动过程中实时重排）
+- 自动编号（锁定时可隐藏编号）
+- 导入/导出（`.txt` / `.json`）
+- 导入后可回退（单步回退导入）
+- 删除可撤销（1 分钟内）
+- 全选/全不选、批量删除（仅编辑模式可用）
+- 字体颜色选择
+- 锁定模式（隐藏操作区；仍可移动窗口与拖拽排序）
+- 置顶（标题栏按钮 / 快捷键）
+- 自动调整窗口高度以适配内容（不超过 Windows 可用高度）
 
-### Sync Your Note With Dropbox Account(Use This Account To Start Your Sticky Notes Where You Left Off)
+## 快捷键
 
-### Choose Background And Title Bar Color You Like
+- **Ctrl + Alt + T**：置顶/取消置顶
+- **Ctrl + Alt + B**：尽量置底（取消置顶并失焦）
 
-### Editing Options Like Font,Bold,Size,Italic,List,Align.etc
+## 数据保存位置
 
-### Add Images To Note From Local Drive
+所有数据都写在项目目录下的 `data/`：
 
-### Add Audio To Note From Local Drive
+- `data/profile`：当前 profile 名（默认 `default`）
+- `data/<profile>/todos.json`：待办数据
+- `data/<profile>/settings.json`：设置（如 `textColor`、`locked`）
 
-### Add Video To Note From Local Drive
+## 导出格式
 
-### Lock The Note
+- **TXT**：每行一个条目，形如：
+  - `1. [ ] 内容`
+  - `2. [x] 已完成内容`
+- **JSON**：数组格式（包含 `id/text/done/createdAt`）
 
-### Import Note From A File
+## 导入说明
 
-### Export Note To A File
+- 支持导入 **TXT/JSON**
+- 默认行为是 **追加导入**（不会覆盖现有条目）
+- 导入完成后会出现 **“回退导入”** 按钮（后续有其它编辑/拖拽操作会自动失效）
 
-### Undo,Redo Options
+## 开发与运行
 
-### Spellcheck
+### 环境要求
 
-### Profiles
+- Node.js >= 18
+- pnpm（项目使用 pnpm 作为包管理器）
 
-### Light And Dark Theme
-
-### If you like my App please consider buying me a coffee at [HERE!](https://www.buymeacoffee.com/playork)
-
-# Stable Release
-
-## For Linux
-
-[![Get it from the Snap Store](https://snapcraft.io/static/images/badges/en/snap-store-black.svg)](https://snapcraft.io/stickynotes)
-
-# Unstable Release
-
-### For Development Version Follow the instructions below
-
-if you want to try it install [nodejs](https://nodejs.org), [git](https://git-scm.com/), [Vue CLI](https://cli.vuejs.org/), [pnpm](https://pnpm.js.org/) and clone this repository
-
-```bash
-git clone https://github.com/Playork/StickyNotes
-```
-
-point to source directory
-
-```bash
-cd /path/to/source/of/StickyNotes
-```
-
-and install dependence by
+### 安装依赖
 
 ```bash
 pnpm install
 ```
 
-to try application or develop run application by this command
+### 启动开发模式
 
 ```bash
 pnpm start
 ```
 
-for daily use or production build application by this command
+### 构建
 
 ```bash
 pnpm run build
 ```
 
-# Licence
+## Licence
 
 MIT License (MIT)
 

@@ -21,12 +21,93 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE. */
 
 "use strict";
-const { app, BrowserWindow, ipcMain, dialog, globalShortcut, screen } = require("electron");
+const { app, BrowserWindow, ipcMain, dialog, globalShortcut, screen, Tray, Menu, nativeImage } = require("electron");
 const { createProtocol } = require("vue-cli-plugin-electron-builder/lib");
 const fs = require("fs");
+const path = require("path");
 
 let win;
 let isQuitting = false;
+let tray = null;
+
+function trayLogoPng() {
+  // 优先使用项目内的 logo.png 作为托盘图标（开发环境可直接读取 src/assets）
+  // 打包后路径可能变化，因此这里做多路径尝试；失败则返回 null 走兜底。
+  const candidates = [
+    path.join(process.cwd(), "src", "assets", "logo.png"),
+    // vue-cli-plugin-electron-builder 在生产环境通常会把静态资源放到 __static
+    typeof __static === "string" ? path.join(__static, "img", "logo.png") : null,
+    typeof __static === "string" ? path.join(__static, "logo.png") : null
+  ].filter(Boolean);
+
+  for (const p of candidates) {
+    try {
+      const img = nativeImage.createFromPath(p);
+      if (img && !img.isEmpty()) {
+        // Windows 托盘常见 16/20/24px，这里先用 16px，系统会按 DPI 缩放
+        return img.resize({ width: 16, height: 16 });
+      }
+    } catch {}
+  }
+  return null;
+}
+
+function trayImage() {
+  // 高对比度黄色便签 + 对勾（SVG 渲染为托盘图标）
+  const svg = `<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+  <rect x="10" y="10" width="44" height="44" rx="10" fill="#FFD84D"/>
+  <path d="M22 34.5l6.2 6.2L43 26" fill="none" stroke="#111" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>`;
+  const dataUrl = `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`;
+  const img = nativeImage.createFromDataURL(dataUrl);
+  return img && !img.isEmpty() ? img : null;
+}
+
+function ensureTray() {
+  if (tray) return tray;
+  try {
+    let img = trayLogoPng() || trayImage();
+    if (!img) {
+      // 兜底：保证托盘仍会出现
+      img = nativeImage.createFromDataURL(
+        "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAQAAAC1+jfqAAAAV0lEQVR4AWP4z8Dwn4GBgQGJgQHh/4+BgYHhP4gZGBgYkB8YGBgY/0dDQ0P+/////w8MDAz8H5oYGBgY2B8kGBgYGAwAAkK8T5c4GegAAAABJRU5ErkJggg=="
+      );
+    }
+    tray = new Tray(img);
+    tray.setToolTip("Sticky Todo");
+    const menu = Menu.buildFromTemplate([
+      {
+        label: "显示",
+        click: () => {
+          try {
+            if (!win || win.isDestroyed()) return;
+            win.show();
+            win.focus();
+          } catch {}
+        }
+      },
+      {
+        label: "退出",
+        click: () => {
+          try {
+            isQuitting = true;
+            app.quit();
+          } catch {}
+        }
+      }
+    ]);
+    tray.setContextMenu(menu);
+    tray.on("click", () => {
+      try {
+        if (!win || win.isDestroyed()) return;
+        win.show();
+        win.focus();
+      } catch {}
+    });
+  } catch {}
+  return tray;
+}
 
 function ensureDir(p) {
   try {
@@ -60,6 +141,17 @@ function createWindow() {
   win.once("ready-to-show", () => {
     win.show();
     win.focus();
+  });
+
+  // 最小化到托盘
+  win.on("minimize", e => {
+    try {
+      const t = ensureTray();
+      if (t) {
+        e.preventDefault();
+        win.hide();
+      }
+    } catch {}
   });
 
   win.on("close", e => {
@@ -113,7 +205,14 @@ app.on("will-quit", () => {
 ipcMain.handle("minimize", event => {
   try {
     const w = BrowserWindow.fromWebContents(event.sender);
-    if (w) w.minimize();
+    if (w) {
+      const t = ensureTray();
+      if (t) {
+        w.hide();
+      } else {
+        w.minimize();
+      }
+    }
   } catch {}
 });
 
